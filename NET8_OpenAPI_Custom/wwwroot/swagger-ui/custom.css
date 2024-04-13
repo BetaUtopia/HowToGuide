@@ -1,0 +1,42 @@
+.swagger-ui .topbar-wrapper .link img {
+    background: url(../docs/favicon.png) no-repeat;
+    display: block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 32px;
+    padding-left: 100%;
+}
+
+.swagger-ui .topbar {
+    background-color: #084f99 !important;
+}
+
+.swagger-ui .topbar-wrapper label {
+    color: #fff !important;
+}
+
+.swagger-ui .topbar-wrapper .link span {
+    text-indent: -9999px;
+    line-height: 0;
+}
+
+    .swagger-ui .topbar-wrapper .link span::after {
+        content: "";
+        text-indent: 0;
+        width: 100%;
+        display: block;
+        line-height: initial;
+    }
+
+.swagger-ui .topbar a {
+    max-width: 800px;
+}
+
+.swagger-ui .topbar .download-url-wrapper .select-label select {
+    border: 2px solid #053980;
+}
+
+.swagger-ui .scheme-container {
+    display: none;
+}
