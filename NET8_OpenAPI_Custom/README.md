@@ -11,7 +11,7 @@ Copy the following folders and files to the root directory of your project:
 * Program.cs
 
 ## Step 3: Update .csproj File
-Add the following line to your .csproj file within <PropertyGroup> to enable XML documentation generation :
+Add the following line to your .csproj file within PropertyGroup to enable XML documentation generation :
 
 ```xml
 <GenerateDocumentationFile>true</GenerateDocumentationFile>
