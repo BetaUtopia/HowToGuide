@@ -21,7 +21,8 @@ mkdir model && cd model
 ```
 
 ```bash
-yolo detect train data=coco128.yaml model=yolov8n.pt name=retrain_yolov8n epochs=1 batch=16
+yolo detect train data=coco128.yaml model=yolov8n.pt name=retrain_yolov8n project=./runs/detect epochs=1 batch=16
+
 ```
 
 ## Convert to ONNX
@@ -34,8 +35,7 @@ cd runs/detect/retrain_yolov8n/weights
 ```
 
 ```bash
-cd ~/Hailo8l
-deactivate
+cd ~/Hailo8l && deactivate
 ```
 
 ## Install Hailo
@@ -47,9 +47,9 @@ sudo apt-get install python3.8 python3.8-venv python3.8-dev
 
 ```bash
 python3.8 -m venv venv_hailo
-source venv_yolov8/bin/activate
+source venv_hailo/bin/activate
 sudo apt-get update
-sudo apt-get install build-essential graphviz graphviz-dev python3-tk
+sudo apt-get install build-essential python3-dev graphviz graphviz-dev python3-tk
 pip install pygraphviz
 ```
 
