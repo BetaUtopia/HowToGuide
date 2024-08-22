@@ -28,7 +28,7 @@ yolo export model=./best.pt imgsz=640 format=onnx opset=11
 ```
 
 ```bash
-cd ~/hailo8l
+cd ~/Hailo8l
 deactivate
 ```
 
