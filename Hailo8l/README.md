@@ -75,7 +75,7 @@ hailomz parse --hw-arch hailo8l --ckpt ./best.onnx yolov8n
 ```bash
 hailomz optimize --hw-arch hailo8l --har ./yolov8n.har \
     --calib-path /home/sam/.hailomz/data/models_files/coco/2023-08-03/coco_calib2017.tfrecord \
-    --model-script /home/sam/hailo8l/hailo_model_zoo/hailo_model_zoo/cfg/alls/generic/yolov8n.alls \
+    --model-script /home/sam/Hailo8l/hailo_model_zoo/hailo_model_zoo/cfg/alls/generic/yolov8n.alls \
     yolov8n
 ```
 
