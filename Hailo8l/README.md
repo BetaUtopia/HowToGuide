@@ -18,6 +18,9 @@ pip install ultralytics
 
 ```bash
 mkdir model && cd model
+```
+
+```bash
 yolo detect train data=coco128.yaml model=yolov8n.pt name=retrain_yolov8n epochs=1 batch=16
 ```
 
