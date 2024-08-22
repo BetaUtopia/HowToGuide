@@ -21,7 +21,7 @@ mkdir model && cd model
 yolo detect train data=coco128.yaml model=yolov8n.pt name=retrain_yolov8n epochs=1 batch=16
 ```
 
-## Convert ot ONNX
+## Convert to ONNX
 ```bash
 cd runs/detect/retrain_yolov8n/weights
 yolo export model=./best.pt imgsz=640 format=onnx opset=11 
