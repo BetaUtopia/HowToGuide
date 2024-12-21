@@ -1,4 +1,4 @@
-# Setting up an Raspberry Pi 5 as NAS using OpenMediaVault
+# Setting up an Raspberry Pi 5 as NAS using OpenMediaVault 7
 
 ## Step 1: Update System
 ```bash
