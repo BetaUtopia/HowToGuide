@@ -27,7 +27,12 @@ ip a
 ssh pi@your_ip_address
 ```
 
-Default Username:   admin
-Default Password:   openmediavault
-
+### Default Username:
+```bash
+admin
+```
+### Default Password:
+```bash
+openmediavault
+```
 
