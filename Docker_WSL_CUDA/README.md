@@ -21,7 +21,15 @@ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker c
 ```
 
 ```bash
-./SetupDockerRepository.sh
+git clone --no-checkout https://github.com/BetaUtopia/HowToGuide.git && \
+cd HowToGuide && \
+git sparse-checkout init --cone && \
+git sparse-checkout set Docker_WSL_CUDA && \
+git checkout
+```
+
+```bash
+./Docker_WSL_CUDA/SetupDockerRepository.sh
 ```
 
 ```bash
