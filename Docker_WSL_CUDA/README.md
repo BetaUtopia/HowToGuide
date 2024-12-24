@@ -14,7 +14,7 @@ wsl.exe --list --online
 wsl.exe --install Ubuntu-24.04
 ```
 
-## Ubuntu 24.04
+## Install Docker Engine on Ubuntu 24.04
 
 ```bash
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
@@ -68,14 +68,6 @@ sudo systemctl enable containerd.service
 nvidia-smi
 ```
 
-```bash
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
-```
-
-```bash
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-```
-
 ### Configure Repository, Packages, And Update Repository:
 
 ```bash
@@ -99,7 +91,7 @@ sudo apt-get update
 sudo apt-get install -y nvidia-container-toolkit
 ```
 
-### Configure For Docker
+### Configure CUDA For Docker
 ```bash
 sudo nvidia-ctk runtime configure --runtime=docker
 ```
