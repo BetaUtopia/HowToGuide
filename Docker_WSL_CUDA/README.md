@@ -5,6 +5,9 @@
 ```bat
 wsl --install
 ```
+```bat
+wsl -l -v
+```
 
 ```bat
 wsl.exe --list --online
