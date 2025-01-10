@@ -62,7 +62,7 @@ On Terminal
 
 Create A Vitual Environment
 ```bash
-ipython kernel install --user --name=venv
+ipython kernel install --user --name=venv_test
 ```
 
 On Python

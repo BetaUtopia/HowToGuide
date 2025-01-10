@@ -17,6 +17,8 @@ RUN python3 -m pip install --break-system-packages \
     # --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org \
     jupyterlab ipykernel
 
+RUN pip install --upgrade jupyterlab --break-system-packages
+    
 # Expose necessary ports
 EXPOSE 8888
 
