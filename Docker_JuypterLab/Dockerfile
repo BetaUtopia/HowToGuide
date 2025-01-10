@@ -29,7 +29,5 @@ COPY code/Test.ipynb /home/ubuntu/code/Test.ipynb
 # Copy Supervisor configuration
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-WORKDIR /home/ubuntu
-
 # Start Supervisor to manage services
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
