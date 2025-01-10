@@ -45,7 +45,7 @@ Copy the token and go to localhost:8888
 
 Where files are located.
 ```bat
-\\wsl.localhost\Ubuntu-24.04\home\sam\Docker_JuypterLab
+\\wsl.localhost\Ubuntu-24.04\home\sam\HowToGuide\Docker_JuypterLab
 ```
 
 ```bat
