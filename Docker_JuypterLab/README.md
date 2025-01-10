@@ -39,13 +39,13 @@ docker exec -it jupyterlab /bin/bash
 ```bash
 jupyter lab list
 ```
-### Copy the token and go to localhost:8888 
+Copy the token and go to [localhost:8888 ](http://localhost:8888/login)
 
 ## On Windows Machine
 
 Where files are located.
 ```bat
-\\wsl.localhost\Ubuntu-24.04\home\sam\Docker_JuypterLab
+\\wsl.localhost\Ubuntu-24.04\home\sam\HowToGuide\Docker_JuypterLab
 ```
 
 ```bat
@@ -54,6 +54,28 @@ wsl hostname -I
 
 ```bat
 netsh interface portproxy add v4tov4 listenport=8888 listenaddress=0.0.0.0 connectport=8888 connectaddress=172.17.0.1
+```
+
+## On Juypter Lab
+
+On Terminal
+
+Create A Vitual Environment
+```bash
+ipython kernel install --user --name=venv
+```
+
+On Python
+
+Test if GPU is available
+
+```bash
+pip install torch
+```
+
+```bash
+import torch
+print(torch.cuda.is_available())
 ```
 
 
