@@ -1,4 +1,4 @@
-# Setup Docker Engine and WSL 2 Ubuntu with JuypterLab 
+# Setup Docker Engine and WSL 2 Ubuntu with Juypter Lab 
 
 Enter WSL2 / Ubuntu
 
@@ -39,7 +39,7 @@ docker exec -it jupyterlab /bin/bash
 ```bash
 jupyter lab list
 ```
-### Copy the token and go to localhost:8888 
+Copy the token and go to localhost:8888 
 
 ## On Windows Machine
 
