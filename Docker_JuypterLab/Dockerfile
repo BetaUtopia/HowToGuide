@@ -24,7 +24,7 @@ EXPOSE 8888
 
 # Copy Test Code
 RUN mkdir /home/ubuntu/code
-COPY code/Test.conf /home/ubuntu/code/Test.ipynb
+COPY code/Test.ipynb /home/ubuntu/code/Test.ipynb
 
 # Copy Supervisor configuration
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
