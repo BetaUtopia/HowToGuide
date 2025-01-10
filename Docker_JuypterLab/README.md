@@ -1,4 +1,4 @@
-# Setup Docker Engine and WSL 2 Ubuntu with JuypterLab 
+# Setup Docker Engine and WSL 2 Ubuntu with Juypter Lab 
 
 Enter WSL2 / Ubuntu
 
