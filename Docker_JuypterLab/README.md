@@ -58,24 +58,45 @@ netsh interface portproxy add v4tov4 listenport=8888 listenaddress=0.0.0.0 conne
 
 ## On Juypter Lab
 
-On Terminal
+### On Terminal
 
 Create A Vitual Environment
+
 ```bash
-ipython kernel install --user --name=venv_test
+python3 -m venv venv_test
+. venv_test/bin/activate
+pip install jupyter ipykernel
+python -m ipykernel install --user --name=venv_test --display-name "Python (venv_test)"
 ```
 
-On Python
+### On Python
+
+Test if Virtual Enviornment is available
+
+```python
+import sys
+print(sys.executable)
+```
+/venv_test/bin/python
 
 Test if GPU is available
 
-```bash
-pip install torch
+```python
+pip install torch matplotlib
 ```
 
-```bash
+```python
 import torch
 print(torch.cuda.is_available())
 ```
 
+Test some code
+
+```python
+import matplotlib.pyplot as plt
+plt.plot([3,2,1])
+plt.xlabel('Test')
+plt.ylabel('Example')
+plt.show()
+```
 
