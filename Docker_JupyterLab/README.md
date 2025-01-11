@@ -1,4 +1,4 @@
-# Setup Docker Engine and WSL 2 Ubuntu with Juypter Lab 
+# Setup Docker Engine and WSL 2 Ubuntu with Jupyter Lab 
 
 Enter WSL2 / Ubuntu
 
@@ -12,7 +12,7 @@ ubuntu2404
 git clone --no-checkout https://github.com/BetaUtopia/HowToGuide.git && \
 cd HowToGuide && \
 git sparse-checkout init --cone && \
-git sparse-checkout set Docker_JuypterLab && \
+git sparse-checkout set Docker_JupyterLab && \
 git checkout
 ```
 
@@ -21,7 +21,7 @@ echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 ```
 
 ```bash
-cd Docker_JuypterLab
+cd Docker_JupyterLab
 ```
 
 ```bash
@@ -39,13 +39,14 @@ docker exec -it jupyterlab /bin/bash
 ```bash
 jupyter lab list
 ```
-Copy the token and go to [localhost:8888 ](http://localhost:8888/login)
+Copy the token and go to [http://localhost:8888/lab](http://localhost:8888/login)
+e065f7df462ab83b3c4f54ae089a44febebe4ad2b717aa60
 
 ## On Windows Machine
 
 Where files are located.
 ```bat
-\\wsl.localhost\Ubuntu-24.04\home\sam\HowToGuide\Docker_JuypterLab
+\\wsl.localhost\Ubuntu-24.04\home\sam\HowToGuide\Docker_JupyterLab
 ```
 
 ```bat
