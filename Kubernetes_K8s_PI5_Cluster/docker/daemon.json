@@ -1,0 +1,9 @@
+{
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    },
+    "insecure-registries":["192.168.86.100:30001"]
+}

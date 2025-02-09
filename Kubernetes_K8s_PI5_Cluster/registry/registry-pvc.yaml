@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry-pvc
+  namespace: registry  # Make sure the namespace matches
+spec:
+  accessModes:
+    - ReadWriteOnce  # This should match the PV's access modes
+  resources:
+    requests:
+      storage: 50Gi  # This should match the PV's storage capacity
+  storageClassName: local-storage  # Make sure this matches the PV's storageClassName

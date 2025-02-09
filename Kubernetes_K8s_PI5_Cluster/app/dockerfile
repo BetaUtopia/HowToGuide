@@ -1,0 +1,7 @@
+FROM --platform=linux/arm64 arm64v8/alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache busybox
+
+CMD ["/bin/ash", "-c", "while true; do echo Hello, World!; sleep 10; done"]

@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: dashboard.local  # Ensure this matches the URL you're trying to access
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kubernetes-dashboard-kong-proxy  # Ensure this matches your service name
+            port:
+              number: 443  # Ensure this matches your service port
+  tls:
+  - hosts:
+    - dashboard.local  # Same as above
+    secretName: kubernetes-dashboard-certs  # Ensure this is the name of your TLS secret

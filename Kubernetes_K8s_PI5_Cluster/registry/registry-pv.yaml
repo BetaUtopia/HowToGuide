@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: registry-pv
+  namespace: registry
+spec:
+  capacity:
+    storage: 50Gi  # Specify the storage capacity
+  accessModes:
+    - ReadWriteOnce  # The PV will be mounted as read-write by a single node
+  persistentVolumeReclaimPolicy: Retain  # Retain the volume after the PVC is deleted
+  storageClassName: local-storage  # Ensure this matches the PVC definition
+  hostPath:
+    path: /var/lib/registry  # Path to store data on the host node
+    type: DirectoryOrCreate  # Ensure the directory is created if it doesn't exist

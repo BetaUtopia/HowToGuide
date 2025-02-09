@@ -1,0 +1,8 @@
+network:
+  version: 2
+  wifis:
+    wlan0:
+      dhcp4: true
+      access-points:
+        "SSID-NAME-HERE":
+          password: "PASSWORD-HERE"

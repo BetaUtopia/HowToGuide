@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: kubernetes-dashboard
+  name: dashboard-user
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "secrets", "deployments", "replicasets", "pods/log"]
+  verbs: ["get", "list", "watch"]

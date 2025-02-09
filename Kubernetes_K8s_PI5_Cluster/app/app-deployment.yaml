@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-app
+  template:
+    metadata:
+      labels:
+        app: hello-world-app
+    spec:
+      containers:
+      - name: hello-world
+        image: k8smaster:30001/alpine
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh", "-c", "while true; do echo Hello, World!; sleep 10; done"]
+      imagePullSecrets:
+        - name: registry-tls

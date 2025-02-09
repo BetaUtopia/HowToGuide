@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: registry-ingress
+  namespace: registry
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+spec:
+  rules:
+    - host: registry.test  # Replace with your actual domain or local entry
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: registry
+                port:
+                  number: 5000  # Ensure your registry service runs on this port
+  tls:
+    - hosts:
+        - registry.test  # Use the same host name
+      secretName: registry-tls  # This must match your TLS secret name
