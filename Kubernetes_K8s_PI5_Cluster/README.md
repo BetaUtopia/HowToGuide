@@ -37,8 +37,8 @@ sudo nano /etc/netplan/50-cloud-init.yaml
 
 ## Get Files
 ```bash
-git clone --no-checkout https://github.com/BetaUtopia/HowToGuideTest.git && \
-cd HowToGuideTest && \
+git clone --no-checkout https://github.com/BetaUtopia/HowToGuide.git && \
+cd HowToGuide && \
 git sparse-checkout init --cone && \
 git sparse-checkout set Kubernetes_K8s_PI5_Cluster && \
 git checkout
