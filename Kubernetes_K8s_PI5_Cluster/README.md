@@ -20,7 +20,7 @@ sudo nano /etc/netplan/50-cloud-init.yaml
 01-netcfg.yaml, 50-cloud-init.yaml, or NN_interfaceName.yaml
 
 
-# (Master Master and Node)
+# (Master and Node)
 ___
 ## Update Firmware
 
