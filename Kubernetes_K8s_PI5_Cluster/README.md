@@ -11,6 +11,17 @@ sudo nano /etc/netplan/00-installer-config.yaml
 sudo netplan apply
 ```
 
+## Set Static IP
+```bash
+cd /etc/netplan/
+ls
+sudo nano /etc/netplan/50-cloud-init.yaml
+```
+01-netcfg.yaml, 50-cloud-init.yaml, or NN_interfaceName.yaml
+
+
+# (Master Master and Node)
+___
 ## Update Firmware
 
 ```bash
@@ -26,14 +37,6 @@ If you want to override how much cooling is done on the Pi
 ```bash
 echo 2 | sudo tee /sys/class/thermal/cooling_device0/cur_state
 ```
-
-## Set Static IP
-```bash
-cd /etc/netplan/
-ls
-sudo nano /etc/netplan/50-cloud-init.yaml
-```
-01-netcfg.yaml, 50-cloud-init.yaml, or NN_interfaceName.yaml
 
 ## Get Files
 ```bash
@@ -198,9 +201,15 @@ sudo systemctl enable --now kubelet
 sudo reboot
 ```
 
-## Initializing your control-plane node
 ```bash
 sudo kubeadm config images pull
+```
+
+# End of Node (Master Only)
+___
+
+## Initializing your control-plane (Master Only)
+```bash
 sudo kubeadm init \
   --control-plane-endpoint=192.168.86.100:6443 \
   --cri-socket=unix:///var/run/containerd/containerd.sock
@@ -259,7 +268,6 @@ ___
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/cloud/deploy.yaml
 ```
 
-
 ## Install Dashboard
 ___
 ### Add kubernetes-dashboard repository
@@ -307,17 +315,15 @@ Add
 192.168.86.100  k8smaster
 ```
 
-<!-- Access from browser:
-https://dashboard.test:32573/dashboard -->
-
+```bash
+sudo nano /etc/hosts
+```
 
 ### Edit/Validate the Ingress resource
 ```bash
 kubectl edit ingress kubernetes-dashboard -n kubernetes-dashboard
 ```
 nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
-
-
 
 
 ## Create Service Account for Dashboard User to use
@@ -385,14 +391,14 @@ mkdir -p /home/pi/certs
 ### Create the certificate.
 ```bash
 openssl req -x509 -newkey rsa:2048 -keyout /home/pi/certs/dashboard.key -out /home/pi/certs/dashboard.crt -days 365 -nodes \
-  -subj "/CN=dashboard.test" \
+  -subj "/CN=dashboard.local" \
   -config <(cat <<EOF
 [req]
 distinguished_name=req
 x509_extensions = v3_req
 [req_distinguished_name]
 [v3_req]
-subjectAltName=DNS:dashboard.test
+subjectAltName=DNS:dashboard.local
 EOF
 )
 ```
@@ -411,7 +417,7 @@ kubectl get secrets -n kubernetes-dashboard
 
 ```bash
 kubectl patch ingress kubernetes-dashboard -n kubernetes-dashboard \
-  -p '{"spec":{"tls":[{"hosts":["dashboard.test"],"secretName":"kubernetes-dashboard-certs"}]}}'
+  -p '{"spec":{"tls":[{"hosts":["dashboard.local"],"secretName":"kubernetes-dashboard-certs"}]}}'
 ```
 
 ```bash
@@ -434,7 +440,7 @@ kubectl get svc -n ingress-nginx
  scp pi@192.168.86.100:/home/pi/certs/dashboard.crt .
 ```
 
-https://dashboard.test:31168/dashboard
+https://dashboard.local:30325/dashboard
 
 # Create Token for Dashboard
 ```bash
@@ -487,7 +493,6 @@ kubectl apply -f HowToGuide/Kubernetes_K8s_PI5_Cluster/registry/registry-service
 openssl rand -base64 32
 ```
 
-
 #  SSL for Registry
 ___
 ```bash
@@ -506,7 +511,7 @@ EOF
 
 Both on Windows and WSL
 ```bash
-sudo cp registry.crt /usr/local/share/ca-certificates/k8smaster.crt
+sudo cp /home/pi/certs/registry.crt /usr/local/share/ca-certificates/k8smaster.crt
 sudo update-ca-certificates
 sudo ls /etc/ssl/certs | grep k8smaster
 ```
@@ -521,7 +526,7 @@ kubectl create secret tls registry-tls \
 ```
 
 ```bash
-sudo cp /home/pi/certs/registry.crt /usr/local/share/ca-certificates/k8smaster.crt
+sudo cp registry.crt /usr/local/share/ca-certificates/k8smaster.crt
 sudo update-ca-certificates
 sudo ls /etc/ssl/certs | grep k8smaster
 ```
@@ -553,26 +558,26 @@ sudo nano /etc/containerd/config.toml
 sudo systemctl restart containerd
 ```
 
-
 ## Test Registory from Browser
 
 ```bash
 watch kubectl get pods --all-namespaces
 ```
-Wait  for it to be running
+Wait for it to be running
 
 ```bash
 kubectl get svc -n registry
 ```
 
 https://192.168.86.100:30001/v2/_catalog
-https://K8sMasterTest:30001/v2/_catalog
+https://K8sMaster:30001/v2/_catalog
 
 # Setup Docker Engine
 On Other Machine (Linux or Windows WSL)
 
 ### Install required dependencies
 ```bash
+sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 ```
 
@@ -583,7 +588,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 
 ### Add Docker repository
 ```bash
-echo "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 ### Update package index
@@ -613,7 +618,7 @@ docker --version
 
 ### Multi-Platform Emulator
 ```bash
-docker run --privileged --rm tonistiigi/binfmt --install all
+sudo docker run --privileged --rm tonistiigi/binfmt --install all
 ```
 
 ### Restart Docker
@@ -621,13 +626,14 @@ docker run --privileged --rm tonistiigi/binfmt --install all
 sudo service docker restart
 ```
 
-
-
 # Public Docker image to Repository
 ### From Other PC
 
 ```bash
 sudo nano  /etc/docker/daemon.json
+```
+
+```bash
 sudo systemctl restart docker
 ```
 
@@ -637,16 +643,22 @@ docker tag arm64v8/hello-world 192.168.86.100:30001/alpine
 docker push 192.168.86.100:30001/alpine
 ```
 
-
+## Get Files
 ```bash
-docker buildx build --platform linux/arm64 -t 192.168.86.100:30001/alpine .
-docker push 192.168.86.100:30001/alpine
+git clone --no-checkout https://github.com/BetaUtopia/HowToGuide.git && \
+cd HowToGuide && \
+git sparse-checkout init --cone && \
+git sparse-checkout set Kubernetes_K8s_PI5_Cluster && \
+git checkout
 ```
 
+```bash
+sudo docker buildx build --platform linux/arm64 -t 192.168.86.100:30001/alpine .
+sudo docker push 192.168.86.100:30001/alpine
+```
 
 ### Visit 
 http://192.168.86.100:30001/v2/_catalog
-
 
 
 # Deploy Apps to Kubernetes
@@ -670,12 +682,7 @@ kubectl get deployments
 kubectl get pods
 ```
 
-
-
-
-
-
-# Remove Image From Registry
+# Remove Image From Registry (If Needed)
 ```bash
 curl -s -k -X GET https://k8smaster:30001/v2/alpine/manifests/latest \
      -H "Accept: application/vnd.docker.distribution.manifest.v2+json"
@@ -690,22 +697,63 @@ curl -v -sSL -X DELETE "https://${registry}/v2/${name}/manifests/${digest}"
 curl -s -k "https://k8smaster:30001/v2/alpine/tags/list"
 ```
 
+# Check all Pods (If Needed)
 
-
-
-# Check all Pods
+```bash
 kubectl get pods --all-namespaces
+```
 
-# Get Detailed Pod Information
+# Get Detailed Pod Information (If Needed)
+
+```bash
 kubectl describe pod <pod-name> -n <namespace>
+```
+```bash
 kubectl describe pod kube-apiserver-k8smaster -n kube-system
+```
+```bash
 kubectl get nodes -o wide
+```
 
+# Master ONLY
+```bash
+kubeadm token create --print-join-command
+```
 
+```bash
+kubectl get nodes
+```
 
 # Node ONLY
+
 ```bash
-kubeadm join 192.168.86.100:6443 --token 39vmwl.755ptwd7urjf9ghm \
-        --discovery-token-ca-cert-hash sha256:5e04b2c8f6f40a01a2788f647390b573c44b69f82d5c4c7f50e3c7cba5ee7734 \
-        --control-plane
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.ipv4.ip_forward = 1
+EOF
+```
+### Apply sysctl params without reboot
+```bash
+sudo sysctl --system
+```
+
+```bash
+mkdir -p ~/.kube
+scp pi@192.168.86.100:/etc/kubernetes/admin.conf ~/.kube/config
+```
+```bash
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=/etc/kubernetes/admin.conf
+```
+```bash
+echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
+source ~/.bashrc
+```
+
+Example Only 
+```bash
+sudo kubeadm join 192.168.86.100:6443 --token k7drg9.gf3oaw9s72jvmevb --discovery-token-ca-cert-hash sha256:1b2dc867a04688d204009d5b7d4ee5b55d9c2a446a3f837c95756bab999dbe75
+```
+
+```bash
+kubectl get nodes
 ```
