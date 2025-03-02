@@ -131,6 +131,9 @@ sudo ufw allow 10259/tcp      # kube-scheduler
 sudo ufw allow 10257/tcp      # kube-controller-manager
 sudo ufw allow 5000/tcp       # Docker Registry
 sudo ufw allow 30001/tcp      # Docker Registry External
+sudo ufw allow 179/tcp
+sudo ufw allow 4789/udp
+sudo ufw allow 2379:2380/tcp
 ```
 
 ### Firewall (Node ONLY)
@@ -139,6 +142,9 @@ sudo ufw allow 22/tcp
 sudo ufw allow 10250/tcp        # Kubelet API
 sudo ufw allow 10256/tcp        # kube-proxy
 sudo ufw allow 30000:32767/tcp  # NodePort Services
+sudo ufw allow 179/tcp
+sudo ufw allow 4789/udp
+sudo ufw allow 2379:2380/tcp
 ```
 
 ```bash
@@ -205,8 +211,7 @@ sudo reboot
 sudo kubeadm config images pull
 ```
 
-# End of Node (Master Only)
-___
+
 
 ## Initializing your control-plane (Master Only)
 ```bash
@@ -214,18 +219,18 @@ sudo kubeadm init \
   --control-plane-endpoint=192.168.86.100:6443 \
   --cri-socket=unix:///var/run/containerd/containerd.sock
 ```
-
+ (Master Only)
 ```bash
 sudo chown $USER:$USER /etc/kubernetes/admin.conf
 ```
-
+ (Master Only)
 ```bash
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
-
+ (Master Only)
 ```bash
 kubectl get nodes
 kubectl cluster-info
@@ -234,12 +239,15 @@ kubectl cluster-info
 ## Install Calico
 ```bash
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.1/manifests/tigera-operator.yaml
-kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+kubectl taint nodes --all node-role.kubernetes.io/control-plane
 ```
 
 ```bash
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 ```
+
+# End of Node (Master Only)
+___
 
 ### Check all Pods
 ```bash
