@@ -4,7 +4,7 @@ ___
 ## Update the Raspbery Pi Firmware
 
 ```bash
-ssh ppi@192.168.1.204
+ssh pi@192.168.1.204
 ```
 
 ```bash
@@ -44,9 +44,9 @@ sudo bash basic-install.sh
 ```
 
 ## Options
-### OpenDNS 
-### Yes
-### Anonymous Mode
+- OpenDNS 
+- Yes
+- Anonymous Mode
 
 ```bash
 http://192.168.1.204/admin/login
