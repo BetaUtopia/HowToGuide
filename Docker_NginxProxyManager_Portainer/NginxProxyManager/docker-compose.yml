@@ -1,0 +1,54 @@
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:2.15.1'
+    restart: unless-stopped
+    networks:
+      - localnet
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      # Database connection
+      DB_POSTGRES_HOST: "db"
+      DB_POSTGRES_PORT: 5432
+      DB_POSTGRES_USER: "npm"
+      DB_POSTGRES_PASSWORD: "npmpass"
+      DB_POSTGRES_NAME: "npm"
+      # System settings
+      PUID: 1000
+      PGID: 1000
+      DISABLE_IPV6: 'true'
+      SECRET_KEY: "supersecretkey"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: 'postgres:18.4'
+    restart: unless-stopped
+    networks:
+      - localnet
+    environment:
+      POSTGRES_USER: "npm"
+      POSTGRES_PASSWORD: "npmpass"
+      POSTGRES_DB: "npm"
+    volumes:
+      - ./db_data:/var/lib/postgresql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U npm -d npm"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  localnet:
+    external: true
+    name: localnet

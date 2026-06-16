@@ -1,0 +1,26 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data
+    ports:
+      - '9443:9443'
+      - '9000:9000'
+      - '8000:8000'
+    networks:
+      - localnet
+
+volumes:
+  portainer_data:
+    name: portainer_data
+
+networks:
+  localnet:
+    external: true
