@@ -45,7 +45,7 @@ sudo apt update
 
 ```bash
 install the latest version
- sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 ```bash
@@ -56,9 +56,33 @@ sudo systemctl status docker
 sudo systemctl start docker
 ```
 
+# Add User to docker group
+
+```powershell
+sudo usermod -aG docker $USER
+```
+
+```powershell
+exit
+```
+
+```powershell
+wsl -d Ubuntu-26.04
+```
+
+```powershell
+sudo chown root:docker /var/run/docker.sock
+sudo chmod 660 /var/run/docker.sock
+```
+
 # Create Local Network
 ```bash
 sudo docker network create localnet
+```
+
+# Create Container
+```bash
+docker compose up -d --build
 ```
 
 # Create .wslconfig File
