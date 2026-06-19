@@ -80,6 +80,11 @@ sudo chmod 660 /var/run/docker.sock
 sudo docker network create localnet
 ```
 
+# Create Container
+```bash
+docker compose up -d --build
+```
+
 # Create .wslconfig File
 C:\Users\<Your-Username>\.wslconfig
 
