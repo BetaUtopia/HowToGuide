@@ -61,6 +61,20 @@ sudo systemctl start docker
 sudo docker network create localnet
 ```
 
+# Add User to docker group
+
+```powershell
+sudo usermod -aG docker $USER
+```
+
+```powershell
+exit
+```
+
+```powershell
+wsl -d Ubuntu-26.04
+```
+
 # Create .wslconfig File
 C:\Users\<Your-Username>\.wslconfig
 
