@@ -75,6 +75,11 @@ exit
 wsl -d Ubuntu-26.04
 ```
 
+```powershell
+sudo chown root:docker /var/run/docker.sock
+sudo chmod 660 /var/run/docker.sock
+```
+
 # Create .wslconfig File
 C:\Users\<Your-Username>\.wslconfig
 
