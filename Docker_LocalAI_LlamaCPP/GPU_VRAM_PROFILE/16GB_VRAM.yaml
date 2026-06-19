@@ -1,0 +1,11 @@
+command: >
+      --model /models/Qwen3.6-27B-UD-Q4_K_M.gguf
+      --mmproj /models/mmproj-F16.gguf
+      --host 0.0.0.0 
+      --port 8080 
+      --ctx-size 16384
+      --n-gpu-layers auto
+      --flash-attn
+      --jinja
+      --cache-type-k q4_0
+      --cache-type-v q4_0

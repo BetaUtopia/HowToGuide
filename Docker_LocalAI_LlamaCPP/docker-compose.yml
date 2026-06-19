@@ -1,0 +1,35 @@
+services:
+  localai:
+    build: .
+    container_name: localai
+    runtime: nvidia
+    ports:
+      - "32288:8080"
+    networks:
+      - localnet
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ./models:/models
+      - ./hf_cache:/root/.cache/huggingface
+    command: >
+      --model /models/Qwen3.6-35B-A3B-UD-Q4_K_M.gguf
+      --mmproj /models/mmproj-F16.gguf
+      --host 0.0.0.0 
+      --port 8080 
+      --ctx-size 200000 
+      --n-gpu-layers 120
+      --flash-attn on
+      --jinja
+      --cache-type-k q4_0
+      --cache-type-v q4_0
+    restart: unless-stopped
+    
+networks:
+  localnet:
+    external: true
