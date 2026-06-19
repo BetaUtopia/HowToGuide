@@ -56,11 +56,6 @@ sudo systemctl status docker
 sudo systemctl start docker
 ```
 
-# Create Local Network
-```bash
-sudo docker network create localnet
-```
-
 # Add User to docker group
 
 ```powershell
@@ -78,6 +73,11 @@ wsl -d Ubuntu-26.04
 ```powershell
 sudo chown root:docker /var/run/docker.sock
 sudo chmod 660 /var/run/docker.sock
+```
+
+# Create Local Network
+```bash
+sudo docker network create localnet
 ```
 
 # Create .wslconfig File
